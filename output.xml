@@ -1,0 +1,1883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.10.12 on darwin)" generated="20240506 11:17:44.603" rpa="true" schemaversion="4">
+<suite id="s1" name="Tasks" source="/Users/jamiecherrington/Documents/COM397-CW-2/tasks.robot">
+<test id="s1-t1" name="Customer Onboarding" line="50">
+<kw name="Bank Manager Login">
+<kw name="Open Browser" library="RPA.Browser.Selenium">
+<arg>${url}</arg>
+<arg>browser=chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20240506 11:17:45.263" level="INFO">Opening browser 'chrome' to base url 'https://com397bankdemo.z16.web.core.windows.net/'.</msg>
+<status status="PASS" starttime="20240506 11:17:45.262" endtime="20240506 11:17:56.688"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${bank_manager_login_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:17:56.692" endtime="20240506 11:17:57.538"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${bank_manager_login_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:17:57.539" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/div[2]/button'.</msg>
+<status status="PASS" starttime="20240506 11:17:57.538" endtime="20240506 11:17:58.051"/>
+</kw>
+<status status="PASS" starttime="20240506 11:17:45.262" endtime="20240506 11:17:58.051"/>
+</kw>
+<kw name="Onboard Customers">
+<kw name="Get File" library="OperatingSystem">
+<var>${customer_file}</var>
+<arg>new-customers.csv</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20240506 11:17:58.064" level="INFO" html="true">Getting file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/new-customers.csv"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/new-customers.csv&lt;/a&gt;'.</msg>
+<msg timestamp="20240506 11:17:58.070" level="INFO">${customer_file} = first_name,last_name,post_code,currency
+Hart,Wilsee,SY13 8LM,Pound
+Beck,Pflieger,N19 3TG,Pound
+Vikki,Chisholm,EW41 7ZQ,Dollar
+Davina,Mostin,AF33 1BF,Rupee
+Maurits,Tregensoe,RS7 7KD,Pound
+Slade,Sharpli...</msg>
+<status status="PASS" starttime="20240506 11:17:58.057" endtime="20240506 11:17:58.071"/>
+</kw>
+<kw name="Split To Lines" library="String">
+<var>@{customers}</var>
+<arg>${customer_file}</arg>
+<doc>Splits the given string to lines.</doc>
+<msg timestamp="20240506 11:17:58.072" level="INFO">10 lines returned</msg>
+<msg timestamp="20240506 11:17:58.072" level="INFO">@{customers} = [ first_name,last_name,post_code,currency | Hart,Wilsee,SY13 8LM,Pound | Beck,Pflieger,N19 3TG,Pound | Vikki,Chisholm,EW41 7ZQ,Dollar | Davina,Mostin,AF33 1BF,Rupee | Maurits,Tregensoe,RS7 7KD,Pound |...</msg>
+<status status="PASS" starttime="20240506 11:17:58.071" endtime="20240506 11:17:58.072"/>
+</kw>
+<kw name="Remove From List" library="Collections">
+<var>${discard}</var>
+<arg>${customers}</arg>
+<arg>0</arg>
+<doc>Removes and returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20240506 11:17:58.073" level="INFO">${discard} = first_name,last_name,post_code,currency</msg>
+<status status="PASS" starttime="20240506 11:17:58.073" endtime="20240506 11:17:58.073"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>List of customers with missing data\n</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:17:58.075" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/OutputDir/invalid.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/OutputDir/invalid.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:17:58.074" endtime="20240506 11:17:58.075"/>
+</kw>
+<for flavor="IN">
+<var>${customer}</var>
+<value>@{customers}</value>
+<iter>
+<var name="${customer}">Hart,Wilsee,SY13 8LM,Pound</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:17:58.078" level="INFO">@{fields} = [ Hart | Wilsee | SY13 8LM | Pound ]</msg>
+<status status="PASS" starttime="20240506 11:17:58.076" endtime="20240506 11:17:58.078"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:17:58.079" endtime="20240506 11:17:58.122"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:17:58.131" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:17:58.124" endtime="20240506 11:17:58.283"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:17:58.284" endtime="20240506 11:17:58.285"/>
+</kw>
+<msg timestamp="20240506 11:17:58.286" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:17:58.283" endtime="20240506 11:17:58.286"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:17:58.295" level="INFO">Typing text 'Hart' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:17:58.295" endtime="20240506 11:17:59.257"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:17:59.258" level="INFO">Typing text 'Wilsee' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:17:59.257" endtime="20240506 11:17:59.640"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:17:59.641" level="INFO">Typing text 'SY13 8LM' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:17:59.640" endtime="20240506 11:17:59.882"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:17:59.883" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:17:59.883" endtime="20240506 11:18:00.306"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:00.307" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:00.322" level="INFO">${message} = Customer added successfully with customer id :6</msg>
+<status status="PASS" starttime="20240506 11:18:00.307" endtime="20240506 11:18:00.322"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:00.326" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:00.325" endtime="20240506 11:18:00.593"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:00.594" endtime="20240506 11:18:01.649"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:01.650" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Hart Wilsee.</msg>
+<status status="PASS" starttime="20240506 11:18:01.649" endtime="20240506 11:18:01.944"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:01.950" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Pound.</msg>
+<status status="PASS" starttime="20240506 11:18:01.946" endtime="20240506 11:18:02.186"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:02.187" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:02.186" endtime="20240506 11:18:02.314"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:02.316" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:02.321" level="INFO">${message} = Account created successfully with account Number :1016</msg>
+<status status="PASS" starttime="20240506 11:18:02.315" endtime="20240506 11:18:02.321"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:02.326" level="INFO">${getId} = ['1016']</msg>
+<status status="PASS" starttime="20240506 11:18:02.323" endtime="20240506 11:18:02.326"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:02.328" level="INFO">@{ac_no}[0] = [ 1016 ]</msg>
+<status status="PASS" starttime="20240506 11:18:02.327" endtime="20240506 11:18:02.329"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:02.342" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Hart_Wilsee_['1016']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Hart_Wilsee_['1016']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:02.330" endtime="20240506 11:18:02.344"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:02.349" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Hart_Wilsee_['1016']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Hart_Wilsee_['1016']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:02.345" endtime="20240506 11:18:02.349"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:02.367" endtime="20240506 11:18:02.367"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:02.368" endtime="20240506 11:18:02.368"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:02.350" endtime="20240506 11:18:02.368"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:02.350" endtime="20240506 11:18:02.368"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:00.322" endtime="20240506 11:18:02.368"/>
+</kw>
+<status status="PASS" starttime="20240506 11:17:58.286" endtime="20240506 11:18:02.368"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:02.369" endtime="20240506 11:18:02.369"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:02.369" endtime="20240506 11:18:02.369"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:02.369" endtime="20240506 11:18:02.369"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:02.369" endtime="20240506 11:18:02.369"/>
+</branch>
+<status status="PASS" starttime="20240506 11:17:58.286" endtime="20240506 11:18:02.369"/>
+</if>
+<status status="PASS" starttime="20240506 11:17:58.078" endtime="20240506 11:18:02.369"/>
+</kw>
+<status status="PASS" starttime="20240506 11:17:58.076" endtime="20240506 11:18:02.369"/>
+</iter>
+<iter>
+<var name="${customer}">Beck,Pflieger,N19 3TG,Pound</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:18:02.370" level="INFO">@{fields} = [ Beck | Pflieger | N19 3TG | Pound ]</msg>
+<status status="PASS" starttime="20240506 11:18:02.370" endtime="20240506 11:18:02.370"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:02.371" endtime="20240506 11:18:02.444"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:02.447" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:18:02.445" endtime="20240506 11:18:02.755"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:18:02.757" endtime="20240506 11:18:02.757"/>
+</kw>
+<msg timestamp="20240506 11:18:02.757" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:18:02.755" endtime="20240506 11:18:02.758"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:02.759" level="INFO">Typing text 'Beck' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:02.758" endtime="20240506 11:18:02.849"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:02.850" level="INFO">Typing text 'Pflieger' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:02.849" endtime="20240506 11:18:02.947"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:02.948" level="INFO">Typing text 'N19 3TG' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:02.947" endtime="20240506 11:18:03.020"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:03.021" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:03.020" endtime="20240506 11:18:03.194"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:03.196" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:03.201" level="INFO">${message} = Customer added successfully with customer id :7</msg>
+<status status="PASS" starttime="20240506 11:18:03.195" endtime="20240506 11:18:03.202"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:03.203" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:03.203" endtime="20240506 11:18:04.170"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:04.170" endtime="20240506 11:18:04.179"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:04.180" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Beck Pflieger.</msg>
+<status status="PASS" starttime="20240506 11:18:04.179" endtime="20240506 11:18:04.238"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:04.239" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Pound.</msg>
+<status status="PASS" starttime="20240506 11:18:04.239" endtime="20240506 11:18:04.340"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:04.341" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.340" endtime="20240506 11:18:04.487"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:04.488" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:04.494" level="INFO">${message} = Account created successfully with account Number :1017</msg>
+<status status="PASS" starttime="20240506 11:18:04.488" endtime="20240506 11:18:04.495"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:04.497" level="INFO">${getId} = ['1017']</msg>
+<status status="PASS" starttime="20240506 11:18:04.495" endtime="20240506 11:18:04.497"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:04.498" level="INFO">@{ac_no}[0] = [ 1017 ]</msg>
+<status status="PASS" starttime="20240506 11:18:04.497" endtime="20240506 11:18:04.498"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:04.499" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Beck_Pflieger_['1017']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Beck_Pflieger_['1017']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.498" endtime="20240506 11:18:04.499"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:04.500" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Beck_Pflieger_['1017']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Beck_Pflieger_['1017']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.500" endtime="20240506 11:18:04.501"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:04.501" endtime="20240506 11:18:04.501"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:04.502" endtime="20240506 11:18:04.502"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:04.501" endtime="20240506 11:18:04.502"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:04.501" endtime="20240506 11:18:04.502"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:03.202" endtime="20240506 11:18:04.502"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:02.758" endtime="20240506 11:18:04.502"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:04.503" endtime="20240506 11:18:04.503"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:04.503" endtime="20240506 11:18:04.503"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:04.504" endtime="20240506 11:18:04.504"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:04.502" endtime="20240506 11:18:04.504"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:02.758" endtime="20240506 11:18:04.505"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:02.370" endtime="20240506 11:18:04.505"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:02.370" endtime="20240506 11:18:04.505"/>
+</iter>
+<iter>
+<var name="${customer}">Vikki,Chisholm,EW41 7ZQ,Dollar</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:18:04.506" level="INFO">@{fields} = [ Vikki | Chisholm | EW41 7ZQ | Dollar ]</msg>
+<status status="PASS" starttime="20240506 11:18:04.506" endtime="20240506 11:18:04.506"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:04.507" endtime="20240506 11:18:04.518"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:04.519" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.518" endtime="20240506 11:18:04.669"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:18:04.670" endtime="20240506 11:18:04.670"/>
+</kw>
+<msg timestamp="20240506 11:18:04.671" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:18:04.670" endtime="20240506 11:18:04.671"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:04.671" level="INFO">Typing text 'Vikki' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.671" endtime="20240506 11:18:04.732"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:04.733" level="INFO">Typing text 'Chisholm' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.732" endtime="20240506 11:18:04.865"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:04.866" level="INFO">Typing text 'EW41 7ZQ' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.865" endtime="20240506 11:18:04.911"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:04.912" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.912" endtime="20240506 11:18:04.972"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:04.973" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:04.978" level="INFO">${message} = Customer added successfully with customer id :8</msg>
+<status status="PASS" starttime="20240506 11:18:04.972" endtime="20240506 11:18:04.978"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:04.979" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:04.979" endtime="20240506 11:18:05.222"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:05.222" endtime="20240506 11:18:05.227"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:05.227" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Vikki Chisholm.</msg>
+<status status="PASS" starttime="20240506 11:18:05.227" endtime="20240506 11:18:05.266"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:05.268" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Dollar.</msg>
+<status status="PASS" starttime="20240506 11:18:05.267" endtime="20240506 11:18:05.336"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:05.337" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.336" endtime="20240506 11:18:05.371"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:05.372" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:05.380" level="INFO">${message} = Account created successfully with account Number :1018</msg>
+<status status="PASS" starttime="20240506 11:18:05.372" endtime="20240506 11:18:05.380"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:05.381" level="INFO">${getId} = ['1018']</msg>
+<status status="PASS" starttime="20240506 11:18:05.381" endtime="20240506 11:18:05.381"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:05.382" level="INFO">@{ac_no}[0] = [ 1018 ]</msg>
+<status status="PASS" starttime="20240506 11:18:05.381" endtime="20240506 11:18:05.382"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:05.384" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Vikki_Chisholm_['1018']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Vikki_Chisholm_['1018']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.382" endtime="20240506 11:18:05.384"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:05.387" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Vikki_Chisholm_['1018']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Vikki_Chisholm_['1018']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.385" endtime="20240506 11:18:05.388"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:05.390" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Vikki_Chisholm_['1018']_FX_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Vikki_Chisholm_['1018']_FX_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.389" endtime="20240506 11:18:05.391"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:05.393" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Vikki_Chisholm_['1018']_FX_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Vikki_Chisholm_['1018']_FX_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.392" endtime="20240506 11:18:05.394"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:05.389" endtime="20240506 11:18:05.394"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:05.389" endtime="20240506 11:18:05.394"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:04.978" endtime="20240506 11:18:05.394"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:04.671" endtime="20240506 11:18:05.395"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:05.396" endtime="20240506 11:18:05.396"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:05.397" endtime="20240506 11:18:05.397"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:05.398" endtime="20240506 11:18:05.399"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:05.395" endtime="20240506 11:18:05.399"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:04.671" endtime="20240506 11:18:05.399"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:04.506" endtime="20240506 11:18:05.399"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:04.505" endtime="20240506 11:18:05.400"/>
+</iter>
+<iter>
+<var name="${customer}">Davina,Mostin,AF33 1BF,Rupee</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:18:05.401" level="INFO">@{fields} = [ Davina | Mostin | AF33 1BF | Rupee ]</msg>
+<status status="PASS" starttime="20240506 11:18:05.400" endtime="20240506 11:18:05.401"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:05.402" endtime="20240506 11:18:05.424"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:05.426" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.425" endtime="20240506 11:18:05.713"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:18:05.715" endtime="20240506 11:18:05.715"/>
+</kw>
+<msg timestamp="20240506 11:18:05.715" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:18:05.714" endtime="20240506 11:18:05.715"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:05.716" level="INFO">Typing text 'Davina' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.716" endtime="20240506 11:18:05.819"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:05.820" level="INFO">Typing text 'Mostin' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.819" endtime="20240506 11:18:05.878"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:05.879" level="INFO">Typing text 'AF33 1BF' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.878" endtime="20240506 11:18:05.941"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:05.942" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:05.941" endtime="20240506 11:18:05.986"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:05.987" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:05.997" level="INFO">${message} = Customer added successfully with customer id :9</msg>
+<status status="PASS" starttime="20240506 11:18:05.987" endtime="20240506 11:18:05.998"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:06.000" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.000" endtime="20240506 11:18:06.097"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:06.098" endtime="20240506 11:18:06.103"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:06.104" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Davina Mostin.</msg>
+<status status="PASS" starttime="20240506 11:18:06.103" endtime="20240506 11:18:06.156"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:06.158" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Rupee.</msg>
+<status status="PASS" starttime="20240506 11:18:06.157" endtime="20240506 11:18:06.226"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:06.227" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.226" endtime="20240506 11:18:06.254"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:06.256" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:06.263" level="INFO">${message} = Account created successfully with account Number :1019</msg>
+<status status="PASS" starttime="20240506 11:18:06.255" endtime="20240506 11:18:06.263"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:06.264" level="INFO">${getId} = ['1019']</msg>
+<status status="PASS" starttime="20240506 11:18:06.263" endtime="20240506 11:18:06.265"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:06.266" level="INFO">@{ac_no}[0] = [ 1019 ]</msg>
+<status status="PASS" starttime="20240506 11:18:06.265" endtime="20240506 11:18:06.266"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:06.268" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Davina_Mostin_['1019']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Davina_Mostin_['1019']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.266" endtime="20240506 11:18:06.269"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:06.270" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Davina_Mostin_['1019']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Davina_Mostin_['1019']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.269" endtime="20240506 11:18:06.271"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:06.275" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Davina_Mostin_['1019']_FX_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Davina_Mostin_['1019']_FX_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.272" endtime="20240506 11:18:06.275"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:06.277" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Davina_Mostin_['1019']_FX_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Davina_Mostin_['1019']_FX_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.276" endtime="20240506 11:18:06.277"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:06.272" endtime="20240506 11:18:06.277"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:06.272" endtime="20240506 11:18:06.278"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:05.998" endtime="20240506 11:18:06.278"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:05.715" endtime="20240506 11:18:06.278"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:06.278" endtime="20240506 11:18:06.279"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:06.280" endtime="20240506 11:18:06.280"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:06.280" endtime="20240506 11:18:06.280"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:06.278" endtime="20240506 11:18:06.280"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:05.715" endtime="20240506 11:18:06.280"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:05.401" endtime="20240506 11:18:06.280"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:05.400" endtime="20240506 11:18:06.280"/>
+</iter>
+<iter>
+<var name="${customer}">Maurits,Tregensoe,RS7 7KD,Pound</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:18:06.281" level="INFO">@{fields} = [ Maurits | Tregensoe | RS7 7KD | Pound ]</msg>
+<status status="PASS" starttime="20240506 11:18:06.281" endtime="20240506 11:18:06.281"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:06.281" endtime="20240506 11:18:06.288"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:06.289" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.288" endtime="20240506 11:18:06.470"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:18:06.471" endtime="20240506 11:18:06.472"/>
+</kw>
+<msg timestamp="20240506 11:18:06.472" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:18:06.471" endtime="20240506 11:18:06.472"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:06.473" level="INFO">Typing text 'Maurits' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.472" endtime="20240506 11:18:06.555"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:06.556" level="INFO">Typing text 'Tregensoe' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:06.556" endtime="20240506 11:18:08.688"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:08.689" level="INFO">Typing text 'RS7 7KD' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:08.689" endtime="20240506 11:18:08.754"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:08.756" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:08.755" endtime="20240506 11:18:08.821"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:08.823" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:08.834" level="INFO">${message} = Customer added successfully with customer id :10</msg>
+<status status="PASS" starttime="20240506 11:18:08.822" endtime="20240506 11:18:08.834"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:08.840" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:08.838" endtime="20240506 11:18:09.079"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:09.079" endtime="20240506 11:18:09.085"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:09.086" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Maurits Tregensoe.</msg>
+<status status="PASS" starttime="20240506 11:18:09.085" endtime="20240506 11:18:09.137"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:09.140" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Pound.</msg>
+<status status="PASS" starttime="20240506 11:18:09.139" endtime="20240506 11:18:09.259"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:09.260" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.259" endtime="20240506 11:18:09.327"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:09.328" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:09.333" level="INFO">${message} = Account created successfully with account Number :1020</msg>
+<status status="PASS" starttime="20240506 11:18:09.328" endtime="20240506 11:18:09.333"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:09.334" level="INFO">${getId} = ['1020']</msg>
+<status status="PASS" starttime="20240506 11:18:09.334" endtime="20240506 11:18:09.334"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:09.335" level="INFO">@{ac_no}[0] = [ 1020 ]</msg>
+<status status="PASS" starttime="20240506 11:18:09.335" endtime="20240506 11:18:09.335"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:09.338" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Maurits_Tregensoe_['1020']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Maurits_Tregensoe_['1020']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.336" endtime="20240506 11:18:09.338"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:09.340" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Maurits_Tregensoe_['1020']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Maurits_Tregensoe_['1020']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.338" endtime="20240506 11:18:09.341"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:09.342" endtime="20240506 11:18:09.343"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:09.343" endtime="20240506 11:18:09.344"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:09.341" endtime="20240506 11:18:09.344"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:09.341" endtime="20240506 11:18:09.344"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:08.835" endtime="20240506 11:18:09.344"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:06.472" endtime="20240506 11:18:09.345"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:09.345" endtime="20240506 11:18:09.345"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:09.345" endtime="20240506 11:18:09.346"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:09.346" endtime="20240506 11:18:09.346"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:09.345" endtime="20240506 11:18:09.346"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:06.472" endtime="20240506 11:18:09.346"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:06.281" endtime="20240506 11:18:09.346"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:06.280" endtime="20240506 11:18:09.347"/>
+</iter>
+<iter>
+<var name="${customer}">Slade,Sharplin,EH5 1JG,Dollar</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:18:09.348" level="INFO">@{fields} = [ Slade | Sharplin | EH5 1JG | Dollar ]</msg>
+<status status="PASS" starttime="20240506 11:18:09.347" endtime="20240506 11:18:09.348"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:09.349" endtime="20240506 11:18:09.367"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:09.368" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.367" endtime="20240506 11:18:09.481"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:18:09.482" endtime="20240506 11:18:09.482"/>
+</kw>
+<msg timestamp="20240506 11:18:09.482" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:18:09.481" endtime="20240506 11:18:09.482"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:09.483" level="INFO">Typing text 'Slade' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.483" endtime="20240506 11:18:09.592"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:09.593" level="INFO">Typing text 'Sharplin' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.593" endtime="20240506 11:18:09.634"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:09.636" level="INFO">Typing text 'EH5 1JG' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.635" endtime="20240506 11:18:09.688"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:09.689" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.689" endtime="20240506 11:18:09.797"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:09.798" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:09.801" level="INFO">${message} = Customer added successfully with customer id :11</msg>
+<status status="PASS" starttime="20240506 11:18:09.797" endtime="20240506 11:18:09.802"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:09.804" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:09.803" endtime="20240506 11:18:09.949"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:09.949" endtime="20240506 11:18:09.954"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:09.954" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Slade Sharplin.</msg>
+<status status="PASS" starttime="20240506 11:18:09.954" endtime="20240506 11:18:10.017"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:10.018" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Dollar.</msg>
+<status status="PASS" starttime="20240506 11:18:10.017" endtime="20240506 11:18:10.141"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.142" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.142" endtime="20240506 11:18:10.169"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:10.170" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:10.180" level="INFO">${message} = Account created successfully with account Number :1021</msg>
+<status status="PASS" starttime="20240506 11:18:10.169" endtime="20240506 11:18:10.180"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:10.182" level="INFO">${getId} = ['1021']</msg>
+<status status="PASS" starttime="20240506 11:18:10.181" endtime="20240506 11:18:10.182"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:10.182" level="INFO">@{ac_no}[0] = [ 1021 ]</msg>
+<status status="PASS" starttime="20240506 11:18:10.182" endtime="20240506 11:18:10.182"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:10.183" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Slade_Sharplin_['1021']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Slade_Sharplin_['1021']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.182" endtime="20240506 11:18:10.184"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:10.185" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Slade_Sharplin_['1021']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Slade_Sharplin_['1021']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.184" endtime="20240506 11:18:10.185"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:10.188" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Slade_Sharplin_['1021']_FX_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Slade_Sharplin_['1021']_FX_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.187" endtime="20240506 11:18:10.188"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:10.190" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Slade_Sharplin_['1021']_FX_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Slade_Sharplin_['1021']_FX_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.188" endtime="20240506 11:18:10.191"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:10.186" endtime="20240506 11:18:10.191"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:10.185" endtime="20240506 11:18:10.191"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:09.802" endtime="20240506 11:18:10.191"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:09.482" endtime="20240506 11:18:10.191"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:10.192" endtime="20240506 11:18:10.192"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:10.193" endtime="20240506 11:18:10.193"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:10.194" endtime="20240506 11:18:10.194"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:10.192" endtime="20240506 11:18:10.194"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:09.482" endtime="20240506 11:18:10.194"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:09.348" endtime="20240506 11:18:10.194"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:09.347" endtime="20240506 11:18:10.194"/>
+</iter>
+<iter>
+<var name="${customer}">Richardo,Wind,LE10 0NW,Rupee</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:18:10.195" level="INFO">@{fields} = [ Richardo | Wind | LE10 0NW | Rupee ]</msg>
+<status status="PASS" starttime="20240506 11:18:10.195" endtime="20240506 11:18:10.195"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:10.196" endtime="20240506 11:18:10.202"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.202" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.202" endtime="20240506 11:18:10.249"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:18:10.251" endtime="20240506 11:18:10.251"/>
+</kw>
+<msg timestamp="20240506 11:18:10.252" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:18:10.250" endtime="20240506 11:18:10.252"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.255" level="INFO">Typing text 'Richardo' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.253" endtime="20240506 11:18:10.322"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.323" level="INFO">Typing text 'Wind' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.322" endtime="20240506 11:18:10.389"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.391" level="INFO">Typing text 'LE10 0NW' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.390" endtime="20240506 11:18:10.488"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.489" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.488" endtime="20240506 11:18:10.531"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:10.532" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:10.542" level="INFO">${message} = Customer added successfully with customer id :12</msg>
+<status status="PASS" starttime="20240506 11:18:10.532" endtime="20240506 11:18:10.542"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.545" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.544" endtime="20240506 11:18:10.655"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:10.656" endtime="20240506 11:18:10.664"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:10.665" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Richardo Wind.</msg>
+<status status="PASS" starttime="20240506 11:18:10.665" endtime="20240506 11:18:10.740"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:10.742" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Rupee.</msg>
+<status status="PASS" starttime="20240506 11:18:10.741" endtime="20240506 11:18:10.867"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.868" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.867" endtime="20240506 11:18:10.937"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:10.940" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:10.946" level="INFO">${message} = Account created successfully with account Number :1022</msg>
+<status status="PASS" starttime="20240506 11:18:10.938" endtime="20240506 11:18:10.947"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:10.947" level="INFO">${getId} = ['1022']</msg>
+<status status="PASS" starttime="20240506 11:18:10.947" endtime="20240506 11:18:10.948"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:10.949" level="INFO">@{ac_no}[0] = [ 1022 ]</msg>
+<status status="PASS" starttime="20240506 11:18:10.948" endtime="20240506 11:18:10.949"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:10.950" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Richardo_Wind_['1022']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Richardo_Wind_['1022']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.949" endtime="20240506 11:18:10.950"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:10.952" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Richardo_Wind_['1022']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Richardo_Wind_['1022']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.950" endtime="20240506 11:18:10.953"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:10.955" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Richardo_Wind_['1022']_FX_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Richardo_Wind_['1022']_FX_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.954" endtime="20240506 11:18:10.956"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:10.957" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Richardo_Wind_['1022']_FX_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Richardo_Wind_['1022']_FX_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.956" endtime="20240506 11:18:10.957"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:10.953" endtime="20240506 11:18:10.957"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:10.953" endtime="20240506 11:18:10.958"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:10.542" endtime="20240506 11:18:10.958"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:10.252" endtime="20240506 11:18:10.958"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:10.958" endtime="20240506 11:18:10.959"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:10.959" endtime="20240506 11:18:10.959"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:10.959" endtime="20240506 11:18:10.959"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:10.958" endtime="20240506 11:18:10.959"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:10.252" endtime="20240506 11:18:10.959"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:10.195" endtime="20240506 11:18:10.959"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:10.195" endtime="20240506 11:18:10.959"/>
+</iter>
+<iter>
+<var name="${customer}">Fairlie,Illwell,DL12 8JB,Pound</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:18:10.960" level="INFO">@{fields} = [ Fairlie | Illwell | DL12 8JB | Pound ]</msg>
+<status status="PASS" starttime="20240506 11:18:10.960" endtime="20240506 11:18:10.960"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:10.961" endtime="20240506 11:18:10.967"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:10.967" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:18:10.967" endtime="20240506 11:18:11.036"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:18:11.037" endtime="20240506 11:18:11.037"/>
+</kw>
+<msg timestamp="20240506 11:18:11.037" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:18:11.036" endtime="20240506 11:18:11.037"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:11.038" level="INFO">Typing text 'Fairlie' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:11.038" endtime="20240506 11:18:11.124"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:11.125" level="INFO">Typing text 'Illwell' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:11.125" endtime="20240506 11:18:11.189"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:11.190" level="INFO">Typing text 'DL12 8JB' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:11.190" endtime="20240506 11:18:11.414"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:11.415" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:11.415" endtime="20240506 11:18:11.479"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:11.480" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:11.484" level="INFO">${message} = Customer added successfully with customer id :13</msg>
+<status status="PASS" starttime="20240506 11:18:11.479" endtime="20240506 11:18:11.484"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:11.486" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:11.485" endtime="20240506 11:18:11.751"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:11.752" endtime="20240506 11:18:11.761"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:11.762" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Fairlie Illwell.</msg>
+<status status="PASS" starttime="20240506 11:18:11.761" endtime="20240506 11:18:11.835"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:11.836" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Pound.</msg>
+<status status="PASS" starttime="20240506 11:18:11.835" endtime="20240506 11:18:11.881"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:11.882" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:11.881" endtime="20240506 11:18:11.932"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:11.933" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:11.939" level="INFO">${message} = Account created successfully with account Number :1023</msg>
+<status status="PASS" starttime="20240506 11:18:11.932" endtime="20240506 11:18:11.940"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:11.941" level="INFO">${getId} = ['1023']</msg>
+<status status="PASS" starttime="20240506 11:18:11.940" endtime="20240506 11:18:11.941"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:11.942" level="INFO">@{ac_no}[0] = [ 1023 ]</msg>
+<status status="PASS" starttime="20240506 11:18:11.941" endtime="20240506 11:18:11.942"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:11.943" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Fairlie_Illwell_['1023']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Fairlie_Illwell_['1023']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:11.942" endtime="20240506 11:18:11.944"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:11.946" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Fairlie_Illwell_['1023']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Fairlie_Illwell_['1023']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:11.944" endtime="20240506 11:18:11.946"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:11.947" endtime="20240506 11:18:11.947"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:11.947" endtime="20240506 11:18:11.947"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:11.946" endtime="20240506 11:18:11.947"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:11.946" endtime="20240506 11:18:11.948"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:11.485" endtime="20240506 11:18:11.948"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:11.037" endtime="20240506 11:18:11.948"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:11.948" endtime="20240506 11:18:11.948"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:11.948" endtime="20240506 11:18:11.949"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:11.949" endtime="20240506 11:18:11.949"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:11.948" endtime="20240506 11:18:11.949"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:11.037" endtime="20240506 11:18:11.950"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:10.960" endtime="20240506 11:18:11.950"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:10.960" endtime="20240506 11:18:11.950"/>
+</iter>
+<iter>
+<var name="${customer}">Ashton,Duns,YO13 9AZ,Pound</var>
+<kw name="Split String" library="String">
+<var>@{fields}</var>
+<arg>${customer}</arg>
+<arg>separator=,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20240506 11:18:11.951" level="INFO">@{fields} = [ Ashton | Duns | YO13 9AZ | Pound ]</msg>
+<status status="PASS" starttime="20240506 11:18:11.950" endtime="20240506 11:18:11.951"/>
+</kw>
+<kw name="Add Customer">
+<arg>@{fields}</arg>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:11.955" endtime="20240506 11:18:12.053"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:12.074" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[1]'.</msg>
+<status status="PASS" starttime="20240506 11:18:12.060" endtime="20240506 11:18:12.182"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${valid_post_code}</var>
+<arg>Should Match Regexp</arg>
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Match Regexp" library="BuiltIn">
+<arg>${post_code}</arg>
+<arg>${post_code_re}</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" starttime="20240506 11:18:12.184" endtime="20240506 11:18:12.184"/>
+</kw>
+<msg timestamp="20240506 11:18:12.185" level="INFO">${valid_post_code} = True</msg>
+<status status="PASS" starttime="20240506 11:18:12.183" endtime="20240506 11:18:12.185"/>
+</kw>
+<if>
+<branch type="IF" condition="${valid_post_code} == ${True}">
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_first_name}</arg>
+<arg>${first_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:12.189" level="INFO">Typing text 'Ashton' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:12.187" endtime="20240506 11:18:12.431"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_last_name}</arg>
+<arg>${last_name}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:12.432" level="INFO">Typing text 'Duns' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:12.431" endtime="20240506 11:18:12.549"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_post_code}</arg>
+<arg>${post_code}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:12.551" level="INFO">Typing text 'YO13 9AZ' into text field 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20240506 11:18:12.550" endtime="20240506 11:18:12.640"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${add_customer_form_submit}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:12.642" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:12.641" endtime="20240506 11:18:12.700"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<arg>DISMISS</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:12.705" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:12.712" level="INFO">${message} = Customer added successfully with customer id :14</msg>
+<status status="PASS" starttime="20240506 11:18:12.703" endtime="20240506 11:18:12.712"/>
+</kw>
+<kw name="Open Account">
+<arg>${first_name}</arg>
+<arg>${last_name}</arg>
+<arg>${currency}</arg>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:12.714" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[2]'.</msg>
+<status status="PASS" starttime="20240506 11:18:12.714" endtime="20240506 11:18:12.934"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:12.935" endtime="20240506 11:18:12.944"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_customer_select}</arg>
+<arg>${first_name} ${last_name}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:12.945" level="INFO">Selecting options from selection list 'xpath://html/body/div/div/div[2]/div/div[2]/div/div/form/div[1]/select' by label Ashton Duns.</msg>
+<status status="PASS" starttime="20240506 11:18:12.944" endtime="20240506 11:18:13.019"/>
+</kw>
+<kw name="Select From List By Label" library="RPA.Browser.Selenium">
+<arg>${open_account_currency_select}</arg>
+<arg>${currency}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<msg timestamp="20240506 11:18:13.020" level="INFO">Selecting options from selection list 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/div[2]/select' by label Pound.</msg>
+<status status="PASS" starttime="20240506 11:18:13.019" endtime="20240506 11:18:13.081"/>
+</kw>
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${open_account_process}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:13.082" level="INFO">Clicking element 'xpath:/html/body/div/div/div[2]/div/div[2]/div/div/form/button'.</msg>
+<status status="PASS" starttime="20240506 11:18:13.081" endtime="20240506 11:18:13.136"/>
+</kw>
+<kw name="Handle Alert" library="RPA.Browser.Selenium">
+<var>${message}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<msg timestamp="20240506 11:18:13.137" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg timestamp="20240506 11:18:13.143" level="INFO">${message} = Account created successfully with account Number :1024</msg>
+<status status="PASS" starttime="20240506 11:18:13.136" endtime="20240506 11:18:13.144"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${getId}</var>
+<arg>${message}</arg>
+<arg>${Num_re}</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20240506 11:18:13.144" level="INFO">${getId} = ['1024']</msg>
+<status status="PASS" starttime="20240506 11:18:13.144" endtime="20240506 11:18:13.145"/>
+</kw>
+<kw name="Convert To List" library="Collections">
+<var>@{ac_no}[0]</var>
+<arg>${getId}</arg>
+<doc>Converts the given ``item`` to a Python ``list`` type.</doc>
+<msg timestamp="20240506 11:18:13.146" level="INFO">@{ac_no}[0] = [ 1024 ]</msg>
+<status status="PASS" starttime="20240506 11:18:13.145" endtime="20240506 11:18:13.146"/>
+</kw>
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<msg timestamp="20240506 11:18:13.147" level="INFO" html="true">Created file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Ashton_Duns_['1024']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Ashton_Duns_['1024']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:13.146" endtime="20240506 11:18:13.147"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_credit_agreement.txt</arg>
+<arg>Business Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<msg timestamp="20240506 11:18:13.148" level="INFO" html="true">Appended to file '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/agreements/Ashton_Duns_['1024']_credit_agreement.txt"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/agreements/Ashton_Duns_['1024']_credit_agreement.txt&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20240506 11:18:13.147" endtime="20240506 11:18:13.148"/>
+</kw>
+<if>
+<branch type="IF" condition="$currency == 'Dollar' or $currency == 'Rupee'">
+<kw name="Create File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:13.149" endtime="20240506 11:18:13.150"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>agreements/${first_name}_${last_name}_${ac_no}[0]_FX_credit_agreement.txt</arg>
+<arg>Foreign Exchange Terms and Conditions for account: ${ac_no}[0]</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:13.150" endtime="20240506 11:18:13.150"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:13.149" endtime="20240506 11:18:13.150"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:13.149" endtime="20240506 11:18:13.150"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:12.713" endtime="20240506 11:18:13.150"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:12.186" endtime="20240506 11:18:13.150"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${first_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:13.151" endtime="20240506 11:18:13.151"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${last_name},</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:13.151" endtime="20240506 11:18:13.151"/>
+</kw>
+<kw name="Append To File" library="OperatingSystem">
+<arg>${OUTPUT DIR}/invalid.txt</arg>
+<arg>${currency}\n</arg>
+<doc>Appends the given content to the specified file.</doc>
+<status status="NOT RUN" starttime="20240506 11:18:13.151" endtime="20240506 11:18:13.151"/>
+</kw>
+<status status="NOT RUN" starttime="20240506 11:18:13.150" endtime="20240506 11:18:13.151"/>
+</branch>
+<status status="PASS" starttime="20240506 11:18:12.185" endtime="20240506 11:18:13.151"/>
+</if>
+<status status="PASS" starttime="20240506 11:18:11.951" endtime="20240506 11:18:13.151"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:11.950" endtime="20240506 11:18:13.151"/>
+</iter>
+<status status="PASS" starttime="20240506 11:17:58.075" endtime="20240506 11:18:13.151"/>
+</for>
+<status status="PASS" starttime="20240506 11:17:58.052" endtime="20240506 11:18:13.151"/>
+</kw>
+<kw name="Zip Agreement Documents">
+<kw name="Archive Folder With Zip" library="RPA.Archive">
+<arg>agreements</arg>
+<arg>doc_server/agreements.zip</arg>
+<doc>Create a zip archive of a folder</doc>
+<status status="PASS" starttime="20240506 11:18:13.153" endtime="20240506 11:18:13.159"/>
+</kw>
+<kw name="List Archive" library="RPA.Archive">
+<var>@{zip_contents}</var>
+<arg>doc_server/agreements.zip</arg>
+<doc>List files in an archive</doc>
+<msg timestamp="20240506 11:18:13.184" level="INFO">@{zip_contents} = [ {'filename': "Richardo_Wind_['1022']_credit_agreement.txt", 'size': 51, 'mtime': (2024, 5, 6, 11, 18, 10), 'modified': '06.05.2024 11:18:10'} | {'filename': '.DS_Store', 'size': 6148, 'mtime': (2024...</msg>
+<status status="PASS" starttime="20240506 11:18:13.159" endtime="20240506 11:18:13.185"/>
+</kw>
+<kw name="Copy File" library="OperatingSystem">
+<arg>doc_server/agreements.zip</arg>
+<arg>${dest}</arg>
+<doc>Copies the source file into the destination.</doc>
+<msg timestamp="20240506 11:18:13.187" level="INFO" html="true">Source '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/doc_server/agreements.zip"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/doc_server/agreements.zip&lt;/a&gt;' and destination '&lt;a href="file:///Users/jamiecherrington/Documents/COM397-CW-2/doc_server/agreements.zip"&gt;/Users/jamiecherrington/Documents/COM397-CW-2/doc_server/agreements.zip&lt;/a&gt;' point to the same file.</msg>
+<status status="PASS" starttime="20240506 11:18:13.185" endtime="20240506 11:18:13.187"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:13.152" endtime="20240506 11:18:13.188"/>
+</kw>
+<kw name="Generate Report">
+<kw name="Click Element" library="RPA.Browser.Selenium">
+<arg>${customers_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20240506 11:18:13.190" level="INFO">Clicking element 'xpath://html/body/div/div/div[2]/div/div[1]/button[3]'.</msg>
+<status status="PASS" starttime="20240506 11:18:13.189" endtime="20240506 11:18:13.278"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="RPA.Browser.Selenium">
+<arg>xpath://html/body/div/div/div[2]/div/div[2]/div/div/table</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20240506 11:18:13.278" endtime="20240506 11:18:14.474"/>
+</kw>
+<kw name="Capture Element Screenshot" library="RPA.Browser.Selenium">
+<arg>xpath://html/body/div/div/div[2]/div/div[2]/div/div/table</arg>
+<arg>${OUTPUT DIR}/new_customer_report.png</arg>
+<doc>Captures a screenshot from the element identified by ``locator`` and embeds it into log file.</doc>
+<msg timestamp="20240506 11:18:14.656" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="OutputDir/new_customer_report.png"&gt;&lt;img src="OutputDir/new_customer_report.png" width="400px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20240506 11:18:14.474" endtime="20240506 11:18:14.656"/>
+</kw>
+<status status="PASS" starttime="20240506 11:18:13.188" endtime="20240506 11:18:14.656"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Customer Onboarding Complete</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20240506 11:18:14.657" level="INFO">Customer Onboarding Complete</msg>
+<status status="PASS" starttime="20240506 11:18:14.657" endtime="20240506 11:18:14.657"/>
+</kw>
+<status status="PASS" starttime="20240506 11:17:45.261" endtime="20240506 11:18:14.658"/>
+</test>
+<doc>COM397 Bank Customer Onboarding</doc>
+<status status="PASS" starttime="20240506 11:17:44.610" endtime="20240506 11:18:14.659"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Tasks">Tasks</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

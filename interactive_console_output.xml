@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.10.12 on darwin)" generated="20240504 14:00:20.977" rpa="false" schemaversion="4">
+<suite id="s1" name="Robot Interactive Console" source="/Users/jamiecherrington/.vscode/extensions/robocorp.robotframework-lsp-1.12.0/src/robotframework_ls/vendored/robotframework_interactive/robot_interactive_console.robot">
+<test id="s1-t1" name="Default Task/Test" line="5">
+<kw name="Interpreter Main Loop" library="MainLoop">
+<kw name="Bank Manager Login">
+<msg timestamp="20240504 14:00:21.789" level="FAIL">No keyword with name 'Bank Manager Login' found.</msg>
+<status status="FAIL" starttime="20240504 14:00:21.789" endtime="20240504 14:00:21.789"/>
+</kw>
+<kw name="Onboard Customers">
+<status status="NOT RUN" starttime="20240504 14:00:21.790" endtime="20240504 14:00:21.790"/>
+</kw>
+<kw name="Zip Agreement Documents">
+<status status="NOT RUN" starttime="20240504 14:00:21.791" endtime="20240504 14:00:21.791"/>
+</kw>
+<kw name="Generate Report">
+<status status="NOT RUN" starttime="20240504 14:00:21.791" endtime="20240504 14:00:21.792"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Customer Onboarding Complete</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20240504 14:00:21.792" endtime="20240504 14:00:21.792"/>
+</kw>
+<status status="PASS" starttime="20240504 14:00:21.001" endtime="20240504 14:00:24.264"/>
+</kw>
+<status status="PASS" starttime="20240504 14:00:21.001" endtime="20240504 14:00:24.265"/>
+</test>
+<status status="PASS" starttime="20240504 14:00:20.979" endtime="20240504 14:00:24.268"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot Interactive Console">Robot Interactive Console</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
